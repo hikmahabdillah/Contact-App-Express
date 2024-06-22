@@ -1,17 +1,1 @@
-[
-  {
-    "name": "Aldrin",
-    "img": "img/Aldrin.jpg",
-    "email": "hikmahald@gmail.com"
-  },
-  {
-    "name": "Gracia",
-    "img": "img/Gracia.jpg",
-    "email": "graciaald@gmail.com"
-  },
-  {
-    "name": "Hillary",
-    "img": "img/Hillary.jpg",
-    "email": "hillaryald@gmail.com"
-  }
-]
+[{"name":"Aldrin","img":"img/Aldrin.jpg","email":"hikmahald@gmail.com"},{"name":"Gracia","img":"img/Gracia.jpg","email":"graciaald@gmail.com"},{"name":"Hillary","img":"img/Hillary.jpg","email":"hillaryald@gmail.com"},{"name":"Rere","email":"ald@gmail.com","img":"img/Hillaryyy.jpg"},{"name":"Naisa","email":"naisa@gmail.com","img":"img/Default.jpg"},{"name":"shut your freakin mouth","email":"shutup@gmail.com","img":"img/Default.jpg"}]

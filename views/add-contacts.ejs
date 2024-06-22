@@ -1,0 +1,47 @@
+<h3>Form Add Data</h3>
+<form method="post" action="/contact" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputName"
+      name="name"
+      placeholder="Ex: Aldrin"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label"
+      >Email address</label
+    >
+    <input
+      type="email"
+      class="form-control"
+      id="inputEmail"
+      name="email"
+      placeholder="name@example.com"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Input File Image</label>
+    <input
+      class="form-control"
+      type="file"
+      class="inputIMG"
+      id="inputImage"
+      name="img"
+    />
+  </div>
+  <div class="mb-3">
+    <img
+      src="../img/Aldrin.jpg"
+      class="image-selected rounded img-thumbnail img-fluid object-fit-cover"
+      width="100px"
+      height="100px"
+      alt=""
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Add Contact</button>
+</form>

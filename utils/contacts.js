@@ -36,7 +36,18 @@ const detailContact = (name) => {
   return found;
 };
 
+const saveContact = (contacts) => {
+  fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
+};
+
+const addContact = (contact) => {
+  const contacts = loadContact();
+  contacts.push(contact);
+  saveContact(contacts)
+};
+
 module.exports = {
   loadContact,
   detailContact,
+  addContact,
 };
