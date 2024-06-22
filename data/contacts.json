@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Aldrin",
+    "img": "img/Aldrin.jpg",
+    "age": 19,
+    "email": "hikmahald@gmail.com"
+  },
+  {
+    "name": "Gracia",
+    "img": "img/Gracia.jpg",
+    "age": 23,
+    "email": "graciaald@gmail.com"
+  },
+  {
+    "name": "Hillary",
+    "img": "img/Hillary.jpg",
+    "age": 17,
+    "email": "hillaryald@gmail.com"
+  }
+]

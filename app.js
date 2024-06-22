@@ -4,6 +4,8 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 const port = 8000;
 
+const { loadContact, detailContact } = require("./utils/contacts");
+
 // USE EJS
 app.set("views", "./views");
 app.set("view engine", "ejs");
@@ -17,26 +19,10 @@ app.use(express.static("public"));
 
 // APPLICATION LEVEL MIDDLEWARE
 app.get("/", (req, res) => {
-  const data = [
-    {
-      name: "Aldrin",
-      age: 19,
-      email: "hikmahald@gmail.com",
-    },
-    {
-      name: "Gracia",
-      age: 23,
-      email: "graciaald@gmail.com",
-    },
-    {
-      name: "Hillary",
-      age: 17,
-      email: "hillaryald@gmail.com",
-    },
-  ];
+  const contacts = loadContact();
   res.render("index", {
     title: "Home Page",
-    data,
+    contacts,
     layout: "layouts/mainlayouts.ejs",
   });
 });
@@ -47,8 +33,10 @@ app.get("/about", (req, res) => {
   });
 });
 app.get("/contact", (req, res) => {
+  const contacts = loadContact();
   res.render("contact", {
     title: "Contact Page",
+    contacts,
     layout: "layouts/mainlayouts.ejs",
   });
 });

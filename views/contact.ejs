@@ -1,1 +1,44 @@
-<h1>ini Contact!</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Contact List</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Profile</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (contacts.length !== 0) { %> <% contacts.forEach((element,
+          index) => { %>
+          <tr>
+            <th scope="row"><%= (index +1) %></th>
+            <td>
+              <img
+                src="<%= element.img %>"
+                class="rounded max-h-25 object-fit-cover"
+                width="50px"
+                height="50px"
+                alt=""
+              />
+            </td>
+            <td><%= element.name %></td>
+            <td><%= element.email %></td>
+            <td>
+              <a href="/detail" class="btn btn-success"
+                ><i class="bi bi-info-circle me-2"></i>detail</a
+              >
+            </td>
+          </tr>
+          <% }); } else {%>
+          <h3>Data is empty!</h3>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
