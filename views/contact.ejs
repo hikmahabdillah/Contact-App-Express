@@ -13,8 +13,11 @@
           </tr>
         </thead>
         <tbody>
-          <% if (contacts.length !== 0) { %> <% contacts.forEach((element,
-          index) => { %>
+          <% if (contacts.length === 0) {%>
+          <tr>
+            <td colspan="5" class="text-center text-danger">Data Is Empty</td>
+          </tr>
+          <%} %> <% contacts.forEach((element, index) => { %>
           <tr>
             <th scope="row"><%= (index +1) %></th>
             <td>
@@ -34,9 +37,7 @@
               >
             </td>
           </tr>
-          <% }); } else {%>
-          <h3>Data is empty!</h3>
-          <% } %>
+          <% });%>
         </tbody>
       </table>
     </div>

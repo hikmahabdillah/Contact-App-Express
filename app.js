@@ -40,9 +40,13 @@ app.get("/contact", (req, res) => {
     layout: "layouts/mainlayouts.ejs",
   });
 });
+
 app.get("/contact/:name", (req, res) => {
   const name = req.params.name;
   const detail = detailContact(name);
+  // if (!detail) {
+  //   res.send(404, `${name} Not Found`);
+  // }
   res.render("detail", {
     title: "Detail Page",
     detail,
