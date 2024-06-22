@@ -40,6 +40,15 @@ app.get("/contact", (req, res) => {
     layout: "layouts/mainlayouts.ejs",
   });
 });
+app.get("/contact/:name", (req, res) => {
+  const name = req.params.name;
+  const detail = detailContact(name);
+  res.render("detail", {
+    title: "Detail Page",
+    detail,
+    layout: "layouts/mainlayouts.ejs",
+  });
+});
 
 // for request anything
 app.use("/", (req, res) => {

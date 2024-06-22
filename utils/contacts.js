@@ -27,12 +27,13 @@ const detailContact = (name) => {
   const contacts = loadContact();
   const found = contacts.find((contact) => contact.name === name);
   if (found) {
+    console.log(`Path Img : ${found.img}`);
     console.log(`Name : ${found.name}`);
     console.log(`Email : ${found.email}`);
-    console.log(`PhoneNum : ${found.num}`);
   } else {
     console.log("Data not found!");
   }
+  return found;
 };
 
 module.exports = {
