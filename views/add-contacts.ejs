@@ -1,7 +1,7 @@
 <h3>Form Add Data</h3>
 <form method="post" action="/contact" enctype="multipart/form-data">
   <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Name</label>
+    <label for="inputName" class="form-label">Name</label>
     <input
       type="text"
       class="form-control"
@@ -12,9 +12,7 @@
     />
   </div>
   <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label"
-      >Email address</label
-    >
+    <label for="inputEmail" class="form-label">Email address</label>
     <input
       type="email"
       class="form-control"
@@ -26,22 +24,30 @@
   </div>
   <div class="mb-3">
     <label for="formFile" class="form-label">Input File Image</label>
-    <input
-      class="form-control"
-      type="file"
-      class="inputIMG"
-      id="inputImage"
-      name="img"
-    />
+    <input class="form-control" type="file" id="inputImage" name="img" />
   </div>
   <div class="mb-3">
     <img
       src="../img/Aldrin.jpg"
-      class="image-selected rounded img-thumbnail img-fluid object-fit-cover"
-      width="100px"
-      height="100px"
+      class="image-selected rounded p-1 border object-fit-cover"
+      width="150px"
+      height="150px"
+      accept="image/*"
       alt=""
     />
   </div>
   <button type="submit" class="btn btn-primary">Add Contact</button>
 </form>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const inputImg = document.querySelector("#inputImage");
+    const imgSelected = document.querySelector(".image-selected");
+    inputImg.addEventListener("change", () => {
+      let reader = new FileReader();
+      reader.onload = () => {
+        imgSelected.src = reader.result;
+      };
+      reader.readAsDataURL(inputImg.files[0]);
+    });
+  });
+</script>
