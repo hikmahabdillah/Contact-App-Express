@@ -35,6 +35,17 @@ const detailContact = (name) => {
   return found;
 };
 
+const deleteContact = (name) => {
+  const contacts = loadContact();
+
+  const newContacts = contacts.filter((contact) => contact.name !== name);
+  if (newContacts.length === contacts.length) {
+    console.log(`Data not found`);
+    return false;
+  }
+  saveContact(newContacts);
+};
+
 const saveContact = (contacts) => {
   fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
 };
@@ -58,4 +69,5 @@ module.exports = {
   detailContact,
   addContact,
   isDuplicated,
+  deleteContact,
 };

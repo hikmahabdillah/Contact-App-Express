@@ -17,6 +17,7 @@ const {
   detailContact,
   addContact,
   isDuplicated,
+  deleteContact,
 } = require("./utils/contacts");
 // ACCESS TO ASSETS FOR PUBLIC
 app.use(express.static("public"));
@@ -130,6 +131,18 @@ app.get("/contact/:name", (req, res) => {
     detail,
     layout: "layouts/mainlayouts.ejs",
   });
+});
+
+app.get("/contact/delete/:name", (req, res) => {
+  const name = req.params.name;
+  const contacts = loadContact();
+  const findContact = contacts.find((contact) => contact.name === name);
+  if (!findContact) {
+    res.status(404).send(`${name} Not Found`);
+  }
+  deleteContact(name);
+  req.flash("msg", "Deleted contact successfully!");
+  res.redirect("/contact");
 });
 
 // for request anything
