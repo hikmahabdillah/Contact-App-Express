@@ -3,10 +3,21 @@ const express = require("express");
 const app = express();
 const multer = require("multer");
 const expressLayouts = require("express-ejs-layouts");
-const port = 8000;
-const path = require("path");
+const validator = require("validator");
+// const { body, validationResult, check } = require("express-validator");
+const port = 3000;
 
-const { loadContact, detailContact, addContact } = require("./utils/contacts");
+// flash message
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const flash = require("connect-flash");
+
+const {
+  loadContact,
+  detailContact,
+  addContact,
+  isDuplicated,
+} = require("./utils/contacts");
 // ACCESS TO ASSETS FOR PUBLIC
 app.use(express.static("public"));
 
@@ -24,11 +35,21 @@ const upload = multer({ storage: storage });
 app.set("views", "./views");
 app.set("view engine", "ejs");
 
-// third party middleware
 app.use(expressLayouts);
 
-// built in middleware
 app.use(express.urlencoded({ extended: true }));
+
+// configuration flash
+app.use(cookieParser("secret"));
+app.use(
+  session({
+    cookie: { maxAge: 60000 },
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
 
 // APPLICATION LEVEL MIDDLEWARE
 app.get("/", (req, res) => {
@@ -52,6 +73,7 @@ app.get("/contact", (req, res) => {
   res.render("contact", {
     title: "Contact Page",
     contacts,
+    msg: req.flash("msg"),
     layout: "layouts/mainlayouts.ejs",
   });
 });
@@ -64,10 +86,36 @@ app.get("/contact/add", (req, res) => {
 });
 
 app.post("/contact", upload.single("img"), (req, res) => {
+  // MANUAL VALIDATOR
+  const name = req.body.name;
+  const email = req.body.email;
+  const duplicated = isDuplicated(name);
+  const isEmail = validator.isEmail(email);
+
+  const errors = [];
+  if (duplicated) {
+    errors.push({ msg: "Contact already exists" });
+  }
+
+  if (!isEmail) {
+    errors.push({ msg: "Not a valid e-mail address" });
+  }
+
+  // Jika terdapat error, render kembali halaman dengan pesan kesalahan
+  if (errors.length > 0) {
+    return res.render("add-contacts", {
+      title: "Add Contact Page",
+      layout: "layouts/mainlayouts.ejs",
+      errors: errors,
+    });
+  }
+
+  // After validation process
   const imagePath = req.file ? req.file.filename : "Default.jpg";
   const contact = { ...req.body, img: "img/" + imagePath };
   console.log(contact);
   addContact(contact);
+  req.flash("msg", "Contact added successfully!");
   res.redirect("/contact");
 });
 
@@ -86,7 +134,7 @@ app.get("/contact/:name", (req, res) => {
 
 // for request anything
 app.use("/", (req, res) => {
-  res.send(404, "Not Found");
+  res.status(404).send("Not Found");
 });
 
 app.listen(port, () => {

@@ -1,7 +1,6 @@
 // MANAGE CONTACTS
 //  file system
 const fs = require("fs");
-const validator = require("validator");
 
 // mkdir
 const dirpath = "./data";
@@ -40,14 +39,23 @@ const saveContact = (contacts) => {
   fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
 };
 
+const isDuplicated = (name) => {
+  const contacts = loadContact();
+
+  // duplicated check
+  const duplicated = contacts.find((contact) => contact.name === name);
+  return duplicated;
+};
+
 const addContact = (contact) => {
   const contacts = loadContact();
   contacts.push(contact);
-  saveContact(contacts)
+  saveContact(contacts);
 };
 
 module.exports = {
   loadContact,
   detailContact,
   addContact,
+  isDuplicated,
 };

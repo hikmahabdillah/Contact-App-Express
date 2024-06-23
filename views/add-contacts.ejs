@@ -1,4 +1,11 @@
 <h3>Form Add Data</h3>
+<% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+<div class="alert alert-danger" role="alert">
+  <% errors.forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }); %>
+</div>
+<% } %>
 <form method="post" action="/contact" enctype="multipart/form-data">
   <div class="mb-3">
     <label for="inputName" class="form-label">Name</label>
@@ -16,8 +23,8 @@
     <input
       type="email"
       class="form-control"
-      id="inputEmail"
       name="email"
+      id="inputEmail"
       placeholder="name@example.com"
       required
     />
@@ -28,11 +35,11 @@
   </div>
   <div class="mb-3">
     <img
-      src="../img/Aldrin.jpg"
-      class="image-selected rounded p-1 border object-fit-cover"
+      src="../img/Default.jpg"
+      class="image-selected rounded p-1 border object-fit-cover d-none"
       width="150px"
       height="150px"
-      accept="image/*"
+      accept=".jpg, .jpeg, .png, .gif"
       alt=""
     />
   </div>
@@ -45,6 +52,8 @@
     inputImg.addEventListener("change", () => {
       let reader = new FileReader();
       reader.onload = () => {
+        imgSelected.classList.remove("d-none");
+        imgSelected.classList.add("d-block");
         imgSelected.src = reader.result;
       };
       reader.readAsDataURL(inputImg.files[0]);
