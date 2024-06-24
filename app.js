@@ -18,6 +18,7 @@ const {
   addContact,
   isDuplicated,
   deleteContact,
+  updateContact,
 } = require("./utils/contacts");
 // ACCESS TO ASSETS FOR PUBLIC
 app.use(express.static("public"));
@@ -131,6 +132,59 @@ app.get("/contact/:name", (req, res) => {
     detail,
     layout: "layouts/mainlayouts.ejs",
   });
+});
+
+// form update data
+app.get("/contact/update/:name", (req, res) => {
+  const name = req.params.name;
+  const contacts = loadContact();
+  const findContact = contacts.find((contact) => contact.name === name);
+  if (!findContact) {
+    res.status(404).send(`${name} Not Found`);
+  }
+  res.render("update-contact", {
+    title: "Update Contact Page",
+    layout: "layouts/mainlayouts.ejs",
+    findContact,
+  });
+});
+
+app.post("/contact/update", upload.single("img"), (req, res) => {
+  // MANUAL VALIDATOR
+  const oldName = req.body.oldName;
+  const name = req.body.name;
+  const email = req.body.email;
+  const duplicated = isDuplicated(name);
+  const isEmail = validator.isEmail(email);
+  const contacts = loadContact();
+  const findContact = contacts.find((contact) => contact.name === oldName);
+
+  const errors = [];
+  if (oldName !== name && duplicated) {
+    // res.status(400).send("Duplicated");
+    errors.push({ msg: "Contact already exists" });
+  }
+
+  if (!isEmail) {
+    errors.push({ msg: "Not a valid e-mail address" });
+  }
+
+  // Jika terdapat error, render kembali halaman dengan pesan kesalahan
+  if (errors.length > 0) {
+    return res.render("update-contact", {
+      title: "Update Contact Page",
+      layout: "layouts/mainlayouts.ejs",
+      findContact,
+      errors: errors,
+    });
+  }
+
+  // After validation process
+  const imagePath = req.file ? "img/" + req.file.filename : findContact.img;
+  const contact = { ...req.body, img: imagePath };
+  updateContact(contact);
+  req.flash("msg", "Contact updated successfully!");
+  res.redirect("/contact");
 });
 
 app.get("/contact/delete/:name", (req, res) => {

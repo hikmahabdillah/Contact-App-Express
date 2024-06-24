@@ -46,6 +46,16 @@ const deleteContact = (name) => {
   saveContact(newContacts);
 };
 
+const updateContact = (newContact) => {
+  const contacts = loadContact();
+  const newContacts = contacts.filter(
+    (contact) => contact.name !== newContact.oldName
+  );
+  delete newContacts.oldName; //delete oldName property
+  newContacts.push(newContact); // push new contact to json
+  saveContact(newContacts); // save
+};
+
 const saveContact = (contacts) => {
   fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
 };
@@ -70,4 +80,5 @@ module.exports = {
   addContact,
   isDuplicated,
   deleteContact,
+  updateContact,
 };
