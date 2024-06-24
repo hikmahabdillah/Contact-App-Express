@@ -56,6 +56,22 @@ const updateContact = (newContact) => {
   saveContact(newContacts); // save
 };
 
+const sortContactByName = () => {
+  const contacts = loadContact();
+  // sorting by name asc
+  const sortContact = contacts.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+  });
+  //save contact after sorting
+  saveContact(sortContact);
+  // return loadContact after sorting proccess
+  return loadContact();
+  // const file = fs.readFileSync("./data/contacts.json", "utf-8"); // read file as string before convert to json
+  // const sortContacts = JSON.parse(file); // convert file(type string) to json
+  // return sortContacts;
+};
+
 const saveContact = (contacts) => {
   fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
 };
@@ -81,4 +97,5 @@ module.exports = {
   isDuplicated,
   deleteContact,
   updateContact,
+  sortContactByName,
 };

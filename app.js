@@ -19,6 +19,7 @@ const {
   isDuplicated,
   deleteContact,
   updateContact,
+  sortContactByName,
 } = require("./utils/contacts");
 // ACCESS TO ASSETS FOR PUBLIC
 app.use(express.static("public"));
@@ -71,7 +72,7 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/contact", (req, res) => {
-  const contacts = loadContact();
+  const contacts = sortContactByName();
   res.render("contact", {
     title: "Contact Page",
     contacts,

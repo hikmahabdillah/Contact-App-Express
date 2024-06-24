@@ -7,11 +7,7 @@
 </div>
 <% } %>
 <form method="post" action="/contact/update" enctype="multipart/form-data">
-  <input
-    type="hidden"
-    name="oldName"
-    value="<%= findContact.oldName || findContact.name  %>"
-  />
+  <input type="hidden" name="oldName" value="<%= findContact.name  %>" />
   <div class="mb-3">
     <label for="inputName" class="form-label">Name</label>
     <input
